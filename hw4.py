@@ -33,8 +33,6 @@ import pandas as pd
 # day, month, and year.
 # 
 
-a = dt.date(2024,2,1)
-
 def get_day_month_year(date_list):
     build_df = map(lambda d: {'day': d.day, 'month': d.month, 'year': d.year}, date_list)
     return pd.DataFrame(build_df)
