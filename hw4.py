@@ -6,8 +6,20 @@
 # ["Simba and Nala are lions.", "I laugh in the face of danger.",
 #  "Hakuna matata", "Timon, Pumba and Simba are friends, but Simba could eat the other two."] 
 
-def count_simba(strings):
-    return sum(map(lambda string: string.count("Simba"), strings))
+from functools import reduce
+
+def count_simba(input_list):
+    number_simba = map(lambda s: s.count("Simba"), input_list)
+    return reduce(lambda a, b: a + b, number_simba, 0)
+
+sentences = [
+    "Simba and Nala are lions.",
+    "I laugh in the face of danger.",
+    "Hakuna matata",
+    "Timon, Pumba and Simba are friends, but Simba could eat the other two."
+]
+
+print(count_simba(sentences))
 
 
 # 2)
@@ -17,14 +29,20 @@ def count_simba(strings):
 # is an element of the input list and has as value its 
 # day, month, and year.
 
+import datetime as dt
 import pandas as pd
 
-def get_day_month_year(dates):
-    def extract_components(date):
-        return date.day, date.month, date.year
-    
-    components = map(extract_components, dates)
-    return pd.DataFrame(components, columns=["day", "month", "year"])
+def get_day_month_year(date_list):
+    build_df = map(lambda d: {'day': d.day, 'month': d.month, 'year': d.year}, date_list)
+    return pd.DataFrame(build_df)
+
+dates = [
+    dt.date(2025, 3, 23),
+    dt.date(1978, 11, 21),
+    dt.date(2015, 12, 7)
+]
+
+print(get_day_month_year(dates))
 
 
 # 3) 
@@ -56,12 +74,12 @@ print(compute_distance(coordinates_pairs))
 # for instance for list_1=[[2], 3, [[1,2],5]] 
 # the result should be 13
 
-def sum_general_int_list(items):
-    def reducer(acc, item):
-        if isinstance(item, int):
-            return acc + item
-        elif isinstance(item, list):
-            return acc + sum_general_int_list(item)
-        else:
-            return acc
-    return reduce(reducer, items, 0)
+def sum_general_int_list(input_list):
+    return reduce(lambda total, element: 
+                  total + (element 
+                           if isinstance(element, int) 
+                           else sum_general_int_list(element)), 
+                  input_list, 0)
+
+list_1 = [[2], 3, [[1, 2], 5]]
+print(sum_general_int_list(list_1))
