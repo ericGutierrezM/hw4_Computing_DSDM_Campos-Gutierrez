@@ -34,12 +34,15 @@ def get_day_month_year(dates):
 # example input: [((41.23,23.5), (41.5, 23.4)), ((52.38, 20.1),(52.3, 17.8))]
 # HINT: You can use geopy.distance in order to compute the distance
 
-from geopy.distance import geodesic # type: ignore
+from geopy.distance import geodesic
 from functools import reduce
 
 def compute_distance(coordinates_pairs):
     distances = map(lambda pair: geodesic(pair[0], pair[1]).kilometers, coordinates_pairs)
-    return reduce(lambda acc, val: acc + [val], distances, [])
+    return reduce(lambda accumulate, current: accumulate + [current], distances, [])
+
+coordinates_pairs = [((41.23,23.5), (41.5, 23.4)), ((52.38, 20.1),(52.3, 17.8))]
+print(compute_distance(coordinates_pairs))
 
 
 #################################################
